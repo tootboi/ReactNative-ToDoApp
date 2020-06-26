@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, Button, View } from 'react-native';
+import { StyleSheet, Text, TextInput, Button, View, Keyboard } from 'react-native';
 
 export default function TodoForm({ addTodo }) {
     const [todo, setTodo] = useState('');
@@ -7,14 +7,19 @@ export default function TodoForm({ addTodo }) {
     const handleChange = (newTodo) => {
         setTodo(newTodo);
     }
+    const handleSubmit = () => {
+        Keyboard.dismiss();
+        addTodo(todo);
+    }
     return (
         <View>
             <TextInput
                 style={styles.input}
                 placeholder='new todo'
                 onChangeText={handleChange}
+                clearTextOnFocus={true}
             />
-            <Button onPress={() => addTodo(todo)} title='add todo' color='coral'/>
+            <Button onPress={handleSubmit} title='add todo' color='coral'/>
         </View>
     );
 }
