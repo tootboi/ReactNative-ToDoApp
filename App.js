@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Alert } from 'react-native';
 import Header from './components/header';
 import TodoItem from './components/todoItem';
 import TodoForm from './components/todoForm';
+import uuid from 'react-native-uuid';
 
 export default function App() {
   const [todos, setTodos] = useState([
@@ -17,9 +18,15 @@ export default function App() {
     })
   }
   const addTodo = (todo) => {
-    setTodos((prevTodos) => {
-      return [...prevTodos, {text: todo, id: 'unique'+(prevTodos.length+1)}]
-    })
+    if(todo.length > 0) {
+      setTodos((prevTodos) => {
+        return [...prevTodos, {text: todo, id: uuid.v1()}]
+      })
+    } else {
+      Alert.alert('ERROR', 'Todos must not be empty', [
+        {text: 'Okay'}
+      ])
+    }
   }
 
   return (
