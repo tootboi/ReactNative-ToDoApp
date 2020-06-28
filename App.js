@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, FlatList, Alert } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import Header from './components/header';
 import TodoItem from './components/todoItem';
 import TodoForm from './components/todoForm';
@@ -30,23 +30,25 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      <Header/>
-      <View style={styles.content}>
-        <TodoForm addTodo={addTodo}/>
-        <View style={styles.list}>
-          {/* FlatList is better than Lists as it only reders items that are
-            visible on viewport -- it doesn't render the whole list */}
-          <FlatList
-            keyExtractor={(item) => item.id}
-            data={todos}
-            renderItem={({item}) => (
-              <TodoItem item={item} deleteTodo={deleteTodo}/>
-            )}
-          />
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={styles.container}>
+        <Header/>
+        <View style={styles.content}>
+          <TodoForm addTodo={addTodo}/>
+          <View style={styles.list}>
+            {/* FlatList is better than Lists as it only reders items that are
+              visible on viewport -- it doesn't render the whole list */}
+            <FlatList
+              keyExtractor={(item) => item.id}
+              data={todos}
+              renderItem={({item}) => (
+                <TodoItem item={item} deleteTodo={deleteTodo}/>
+              )}
+            />
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
